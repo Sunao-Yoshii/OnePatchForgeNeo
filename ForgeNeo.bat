@@ -4,6 +4,7 @@ set "VERSION_CONTROL=%PROJECT_ROOT%shells\version_control.bat"
 set "SET_GIT_PATH=%PROJECT_ROOT%shells\git\set_git_path.bat"
 set "SET_PYTHON_PATH=%PROJECT_ROOT%shells\python\set_python_path.bat"
 set "FORGE_DIR=%PROJECT_ROOT%sd-webui-forge-neo"
+set "MODEL_REF_DIR=%PROJECT_ROOT%models"
 set "FORGE_VENV_ACTIVATE=%FORGE_DIR%\venv\Scripts\activate.bat"
 set "FORGE_WEBUI=%FORGE_DIR%\webui.bat"
 
@@ -63,7 +64,7 @@ if errorlevel 1 (
     exit /b 1
 )
 
-set "COMMANDLINE_ARGS=--uv"
+set COMMANDLINE_ARGS=--uv --model-ref "%MODEL_REF_DIR%"
 call "%FORGE_WEBUI%"
 set "FORGE_WEBUI_RESULT=%ERRORLEVEL%"
 popd

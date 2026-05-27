@@ -1,3 +1,8 @@
 shells/python/python313
 sd-webui-forge-neo
 tmp
+env
+*.safetensors
+*.pth
+models/**/*.pt
+output

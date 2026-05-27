@@ -10,10 +10,13 @@ set "PROJECT_ROOT=%SCRIPT_DIR%.."
 for %%I in ("%PROJECT_ROOT%") do set "PROJECT_ROOT=%%~fI"
 set "VERSION_CONTROL=%SCRIPT_DIR%version_control.bat"
 set "INSTALL_PYTHON=%SCRIPT_DIR%python\install_python.bat"
+set "MAKE_VENV=%SCRIPT_DIR%python\make_venv.bat"
 set "SET_GIT_PATH=%SCRIPT_DIR%git\set_git_path.bat"
+set "DOWNLOAD_ARIA=%SCRIPT_DIR%download\download_aria.bat"
 set "FORGE_REPOSITORY_URL=https://github.com/Haoming02/sd-webui-forge-classic.git"
 set "FORGE_BRANCH=neo"
 set "FORGE_DIR=%PROJECT_ROOT%\sd-webui-forge-neo"
+set "ANIMA_MIN=%PROJECT_ROOT%\misc\anima_min.bat"
 
 echo "call : %VERSION_CONTROL%"
 
@@ -27,8 +30,23 @@ if not exist "%INSTALL_PYTHON%" (
     exit /b 1
 )
 
+if not exist "%MAKE_VENV%" (
+    echo make_venv.bat does not exist: "%MAKE_VENV%"
+    exit /b 1
+)
+
 if not exist "%SET_GIT_PATH%" (
     echo set_git_path.bat does not exist: "%SET_GIT_PATH%"
+    exit /b 1
+)
+
+if not exist "%DOWNLOAD_ARIA%" (
+    echo download_aria.bat does not exist: "%DOWNLOAD_ARIA%"
+    exit /b 1
+)
+
+if not exist "%ANIMA_MIN%" (
+    echo anima_min.bat does not exist: "%ANIMA_MIN%"
     exit /b 1
 )
 
@@ -87,24 +105,27 @@ if exist "%FORGE_DIR%\.git" (
     )
 )
 
+call "%DOWNLOAD_ARIA%"
+if errorlevel 1 (
+    echo Failed to download aria2.
+    exit /b 1
+)
+
 pip install uv
 if errorlevel 1 (
     echo Failed to install uv.
     exit /b 1
 )
 
-pushd "%FORGE_DIR%"
+call "%MAKE_VENV%" "%FORGE_DIR%"
 if errorlevel 1 (
-    echo Failed to enter Forge Neo directory: "%FORGE_DIR%"
+    echo Failed to create Forge Neo virtual environment.
     exit /b 1
 )
 
-uv venv venv --python 3.13 --seed
-set "UV_VENV_RESULT=%ERRORLEVEL%"
-popd
-
-if not "%UV_VENV_RESULT%"=="0" (
-    echo Failed to create Forge Neo virtual environment.
+call "%ANIMA_MIN%"
+if errorlevel 1 (
+    echo Failed to download Anima minimum model set.
     exit /b 1
 )
 
