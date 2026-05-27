@@ -42,6 +42,9 @@ if errorlevel 1 exit /b 1
 call "%INSTALL_EXTENSION%" "https://github.com/Chiralistic/Stable-diffusion-webui-civitai-helper-RED-UPDATE.git" "master" "Stable-diffusion-webui-civitai-helper-RED-UPDATE"
 if errorlevel 1 exit /b 1
 
+call "%INSTALL_EXTENSION%" "https://github.com/AI-Creators-Society/stable-diffusion-webui-localization-ja_JP" "main" "stable-diffusion-webui-localization-ja_JP"
+if errorlevel 1 exit /b 1
+
 call "%INSTALL_EXTENSION%" "https://github.com/AUTOMATIC1111/stable-diffusion-webui-wildcards.git" "master" "stable-diffusion-webui-wildcards"
 if errorlevel 1 exit /b 1
 

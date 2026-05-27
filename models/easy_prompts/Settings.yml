@@ -1,16 +1,3 @@
-画像サイズ:
-  縦長:
-    896x1152: "Size: 896x1152,"
-    832x1152: "Size: 832x1152,"
-    832x1216: "Size: 832x1216,"
-    768x1344: "Size: 768x1344,"
-    640x1536: "Size: 768x1344,"
-  横長:
-    1152x896: "Size: 1152x896,"
-    1152x832: "Size: 1152x832,"
-    1216x832: "Size: 1216x832,"
-    1344x768: "Size: 1344x768,"
-    1536x640: "Size: 1344x768,"
 AnimaRating:
   safe: "safe,"
   sensitive: "sensitive,"
@@ -19,3 +6,12 @@ AnimaRating:
 推奨設定:
   Anima1.0-base:
     Euler: "Steps:30.0,Sampler: Euler,CFG scale: 5.0,Schedule type: Beta,"
+    ER_SDE: "Steps:30.0,Sampler: ER SDE,CFG scale: 5.0,Schedule type: Beta,"
+    Turbo: "Steps:10.0,Sampler: ER SDE,CFG scale: 1.0,Schedule type: Beta,"
+  NovaAnimeAM:
+    Euler: "Steps:25.0,Sampler: Euler a,CFG scale: 5.0,Schedule type: Normal,"
+  OOO_Anima:
+    Euler: "Steps:40.0,Sampler: Euler a,CFG scale: 4.0,Schedule type: Normal,"
+  Hassaku Anima:
+    Euler: "Steps:40.0,Sampler: ER SDE,CFG scale: 5.0,Schedule type: Normal,"
+    

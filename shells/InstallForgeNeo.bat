@@ -19,6 +19,7 @@ set "FORGE_DIR=%PROJECT_ROOT%\sd-webui-forge-neo"
 set "ANIMA_MIN=%PROJECT_ROOT%\misc\anima_min.bat"
 set "SET_SYMBOLIC_LINKS=%SCRIPT_DIR%forge_neo\set_symbolic_links.bat"
 set "INSTALL_EXTENSIONS=%SCRIPT_DIR%forge_neo\install_extensions.bat"
+set "DEFAULT_SETTING_DIR=%SCRIPT_DIR%forge_neo\default_setting"
 
 echo "call : %VERSION_CONTROL%"
 
@@ -59,6 +60,11 @@ if not exist "%SET_SYMBOLIC_LINKS%" (
 
 if not exist "%INSTALL_EXTENSIONS%" (
     echo install_extensions.bat does not exist: "%INSTALL_EXTENSIONS%"
+    exit /b 1
+)
+
+if not exist "%DEFAULT_SETTING_DIR%" (
+    echo default_setting directory does not exist: "%DEFAULT_SETTING_DIR%"
     exit /b 1
 )
 
@@ -150,6 +156,12 @@ if errorlevel 1 (
 call "%INSTALL_EXTENSIONS%"
 if errorlevel 1 (
     echo Failed to install Forge Neo extensions.
+    exit /b 1
+)
+
+robocopy "%DEFAULT_SETTING_DIR%" "%FORGE_DIR%" /E /IS /IT >nul
+if errorlevel 8 (
+    echo Failed to copy default Forge Neo settings.
     exit /b 1
 )
 
