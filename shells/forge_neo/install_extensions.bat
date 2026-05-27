@@ -54,7 +54,17 @@ if errorlevel 1 exit /b 1
 call "%SET_SYMBOLIC_LINK%" "%PROJECT_ROOT%\sd-webui-forge-neo\extensions\sd-dynamic-prompts\wildcards" "%PROJECT_ROOT%\models\wildcards"
 if errorlevel 1 exit /b 1
 
-call "%SET_SYMBOLIC_LINK%" "%PROJECT_ROOT%\sd-webui-forge-neo\extensions\sdweb-easy-prompt-selector\tags" "%PROJECT_ROOT%\models\easy_prompts"
+if not exist "%PROJECT_ROOT%\sd-webui-forge-neo\extensions\sdweb-easy-prompt-selector\tags" (
+    mkdir "%PROJECT_ROOT%\sd-webui-forge-neo\extensions\sdweb-easy-prompt-selector\tags"
+    if errorlevel 1 exit /b 1
+)
+
+if exist "%PROJECT_ROOT%\models\easy_prompts" (
+    robocopy "%PROJECT_ROOT%\models\easy_prompts" "%PROJECT_ROOT%\sd-webui-forge-neo\extensions\sdweb-easy-prompt-selector\tags" /E >nul
+    if errorlevel 8 exit /b 1
+)
+
+call "%SET_SYMBOLIC_LINK%" "%PROJECT_ROOT%\models\easy_prompt_selector" "%PROJECT_ROOT%\sd-webui-forge-neo\extensions\sdweb-easy-prompt-selector\tags"
 if errorlevel 1 exit /b 1
 
 call "%SET_SYMBOLIC_LINK%" "%PROJECT_ROOT%\sd-webui-forge-neo\extensions\stable-diffusion-webui-wildcards\wildcards" "%PROJECT_ROOT%\models\wildcards"
