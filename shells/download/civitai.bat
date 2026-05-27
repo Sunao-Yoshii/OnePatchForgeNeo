@@ -15,11 +15,6 @@ if "%~3"=="" (
     exit /b 1
 )
 
-if "%~4"=="" (
-    echo VERSION_ID is required.
-    exit /b 1
-)
-
 for %%I in ("%~dp0.") do set "SCRIPT_DIR=%%~fI"
 for %%I in ("%~dp0..\..") do set "PROJECT_ROOT=%%~fI"
 set "ARIA_BAT=%SCRIPT_DIR%\aria.bat"
@@ -52,6 +47,7 @@ set "DOWNLOAD_DIR=%~1"
 set "DOWNLOAD_FILE=%~2"
 set "MODEL_ID=%~3"
 set "VERSION_ID=%~4"
+if not defined VERSION_ID set "VERSION_ID=%MODEL_ID%"
 set "DOWNLOAD_URL=https://civitai.red/api/download/models/%VERSION_ID%?token=%CIVITAI_KEY%"
 set "MODEL_URL=https://civitai.red/models/%MODEL_ID%?modelVersionId=%VERSION_ID%"
 
