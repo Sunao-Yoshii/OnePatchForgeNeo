@@ -14,11 +14,6 @@ for %%I in ("%~1") do set "LINK_DIR=%%~fI"
 for %%I in ("%~2") do set "TARGET_DIR=%%~fI"
 for %%I in ("%LINK_DIR%\..") do set "LINK_PARENT_DIR=%%~fI"
 
-if not exist "%TARGET_DIR%" (
-    echo Target directory does not exist: "%TARGET_DIR%"
-    exit /b 1
-)
-
 if not exist "%LINK_PARENT_DIR%" (
     mkdir "%LINK_PARENT_DIR%"
     if errorlevel 1 (
@@ -27,11 +22,28 @@ if not exist "%LINK_PARENT_DIR%" (
     )
 )
 
+if not exist "%TARGET_DIR%" (
+    mkdir "%TARGET_DIR%"
+    if errorlevel 1 (
+        echo Failed to create target directory: "%TARGET_DIR%"
+        exit /b 1
+    )
+)
+
 if exist "%LINK_DIR%" (
     rmdir "%LINK_DIR%" >nul 2>&1
-    if errorlevel 1 (
-        echo Link path already exists and could not be replaced safely: "%LINK_DIR%"
-        exit /b 1
+    if exist "%LINK_DIR%" (
+        robocopy "%LINK_DIR%" "%TARGET_DIR%" /E >nul
+        if errorlevel 8 (
+            echo Failed to copy existing link directory contents: "%LINK_DIR%" -^> "%TARGET_DIR%"
+            exit /b 1
+        )
+
+        rmdir /s /q "%LINK_DIR%" >nul 2>&1
+        if exist "%LINK_DIR%" (
+            echo Warning: link path could not be removed, so symbolic link was skipped: "%LINK_DIR%"
+            exit /b 0
+        )
     )
 )
 

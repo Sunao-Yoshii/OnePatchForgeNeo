@@ -6,3 +6,7 @@ env
 *.pth
 models/**/*.pt
 output
+models/diffusers
+models/ControlNetPreprocessor
+.keep
+*here.txt

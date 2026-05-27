@@ -17,6 +17,8 @@ set "FORGE_REPOSITORY_URL=https://github.com/Haoming02/sd-webui-forge-classic.gi
 set "FORGE_BRANCH=neo"
 set "FORGE_DIR=%PROJECT_ROOT%\sd-webui-forge-neo"
 set "ANIMA_MIN=%PROJECT_ROOT%\misc\anima_min.bat"
+set "SET_SYMBOLIC_LINKS=%SCRIPT_DIR%forge_neo\set_symbolic_links.bat"
+set "INSTALL_EXTENSIONS=%SCRIPT_DIR%forge_neo\install_extensions.bat"
 
 echo "call : %VERSION_CONTROL%"
 
@@ -47,6 +49,16 @@ if not exist "%DOWNLOAD_ARIA%" (
 
 if not exist "%ANIMA_MIN%" (
     echo anima_min.bat does not exist: "%ANIMA_MIN%"
+    exit /b 1
+)
+
+if not exist "%SET_SYMBOLIC_LINKS%" (
+    echo set_symbolic_links.bat does not exist: "%SET_SYMBOLIC_LINKS%"
+    exit /b 1
+)
+
+if not exist "%INSTALL_EXTENSIONS%" (
+    echo install_extensions.bat does not exist: "%INSTALL_EXTENSIONS%"
     exit /b 1
 )
 
@@ -126,6 +138,18 @@ if errorlevel 1 (
 call "%ANIMA_MIN%"
 if errorlevel 1 (
     echo Failed to download Anima minimum model set.
+    exit /b 1
+)
+
+call "%SET_SYMBOLIC_LINKS%"
+if errorlevel 1 (
+    echo Failed to set Forge Neo symbolic links.
+    exit /b 1
+)
+
+call "%INSTALL_EXTENSIONS%"
+if errorlevel 1 (
+    echo Failed to install Forge Neo extensions.
     exit /b 1
 )
 
