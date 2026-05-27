@@ -33,6 +33,7 @@ if "%CURRENT_PYTHON_PREFIX%"=="%PYTHON_VERSION%" (
 
 set "SCRIPT_DIR=%~dp0"
 set "PYTHON_DIR=%SCRIPT_DIR%%PYTHON_PATH%"
+set "PYTHON_SCRIPTS_DIR=%PYTHON_DIR%\Scripts"
 set "PYTHON_ZIP=%PYTHON_DIR%\%PYTHON_ZIP_RENAME%"
 set "PYTHON_EXE=%PYTHON_DIR%\python.exe"
 set "PYTHON_PTH=%PYTHON_DIR%\%PYTHON_PATH%._pth"
@@ -74,7 +75,7 @@ if errorlevel 1 (
     exit /b 1
 )
 
-call set "PATH=%PYTHON_DIR%;%%PATH%%"
+call set "PATH=%PYTHON_DIR%;%PYTHON_SCRIPTS_DIR%;%%PATH%%"
 
 curl -sSL --fail --ssl-no-revoke "https://bootstrap.pypa.io/get-pip.py" -o "%GET_PIP%"
 if errorlevel 1 (

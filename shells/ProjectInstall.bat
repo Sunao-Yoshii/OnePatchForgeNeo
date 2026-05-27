@@ -7,8 +7,10 @@ set "PROJECT_REPOSITORY_URL=https://github.com/Sunao-Yoshii/OnePatchForgeNeo.git
 set "PROJECT_BRANCH=main"
 
 set "SCRIPT_DIR=%~dp0"
+set "SELF_PATH=%~f0"
 set "INSTALL_DIR=%CD%"
 for %%I in ("%INSTALL_DIR%") do set "INSTALL_DIR=%%~fI"
+set "INSTALL_FORGE_NEO=%INSTALL_DIR%\shells\InstallForgeNeo.bat"
 set "ENV_DIR=%SCRIPT_DIR%shells\git\env"
 set "PORTABLE_GIT_DIR=%SCRIPT_DIR%shells\git\env\PortableGit"
 set "PORTABLE_GIT_BIN_DIR=%SCRIPT_DIR%shells\git\env\PortableGit\bin"
@@ -66,7 +68,7 @@ if exist "%INSTALL_DIR%\.git" (
         exit /b 1
     )
 
-    exit /b 0
+    goto RUN_INSTALLER_AND_DELETE
 )
 
 dir /a /b "%INSTALL_DIR%" >nul 2>&1
@@ -101,7 +103,7 @@ if not errorlevel 1 (
         )
     )
 
-    exit /b 0
+    goto RUN_INSTALLER_AND_DELETE
 )
 
 git clone --branch "%PROJECT_BRANCH%" "%PROJECT_REPOSITORY_URL%" "%INSTALL_DIR%"
@@ -110,4 +112,20 @@ if errorlevel 1 (
     exit /b 1
 )
 
+goto RUN_INSTALLER_AND_DELETE
+
+:RUN_INSTALLER_AND_DELETE
+
+if not exist "%INSTALL_FORGE_NEO%" (
+    echo InstallForgeNeo.bat does not exist: "%INSTALL_FORGE_NEO%"
+    exit /b 1
+)
+
+start "InstallForgeNeo" /D "%INSTALL_DIR%" "%ComSpec%" /c ""%INSTALL_FORGE_NEO%""
+if errorlevel 1 (
+    echo Failed to start InstallForgeNeo.bat: "%INSTALL_FORGE_NEO%"
+    exit /b 1
+)
+
+start "" /min "%ComSpec%" /c "ping 127.0.0.1 -n 2 >nul & del /f /q ""%SELF_PATH%"""
 exit /b 0

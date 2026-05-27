@@ -2,7 +2,15 @@
 
 ForgeNeo をワンパン操作でインストール→即実行を目指すリポジトリ
 
-# 詳細
+## インストール方法
+
+- [こちらのファイル](https://github.com/Sunao-Yoshii/OnePatchForgeNeo/raw/main/shells/ProjectInstall.bat) を右クリックから保存します。
+  - NVIDIA GPU の Windows PC、20GB 以上の空きストレージ、PC の管理者権限、アバストなどの Windows Diffender でないウィルスチェック無効化、VPN の無効化が必要です。
+- `C:/ForgeNeo/` 等の浅いパスの空のフォルダで `ProjectInstall.bat` をダブルクリック実行します。
+  - `WindowsによってPCが保護されました` と表示されたら、`詳細表示` から `実行` します。
+
+
+## 詳細
 
 ForgeNeo 環境をインストールするにあたり、複雑な手順をすべて自動化するリポジトリです。  
 ディレクトリ構成は次の通りです。
@@ -10,3 +18,4 @@ ForgeNeo 環境をインストールするにあたり、複雑な手順をす�
 - misc : 追加プラグインなどをインストールするためのフォルダ
 - models : ForgeNeo で利用する各種モデル、スクリプト
 - shells : 各種自動化を行うにあたり利用する　Bat/PowerShell 置き場
+
