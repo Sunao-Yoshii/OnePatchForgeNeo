@@ -1,4 +1,6 @@
 @echo off
+if exist "%SystemRoot%\System32\chcp.com" "%SystemRoot%\System32\chcp.com" 65001 >nul
+
 set "PROJECT_ROOT=%~dp0"
 set "VERSION_CONTROL=%PROJECT_ROOT%shells\version_control.bat"
 set "SET_GIT_PATH=%PROJECT_ROOT%shells\git\set_git_path.bat"

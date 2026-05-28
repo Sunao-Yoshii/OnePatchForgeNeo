@@ -31,6 +31,10 @@ set "ARIA_ZIP=%ENV_DIR%\aria2.zip"
 set "ARIA_DIR=%ENV_DIR%\%AREA_PATH%"
 set "ARIA_EXE=%ARIA_DIR%\aria2c.exe"
 
+if exist "%ARIA_EXE%" (
+    exit /b 0
+)
+
 if not exist "%ENV_DIR%" (
     mkdir "%ENV_DIR%"
     if errorlevel 1 (

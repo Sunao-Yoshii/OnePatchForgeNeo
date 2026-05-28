@@ -1,19 +1,19 @@
 @echo off
 
 for %%I in ("%~dp0..\..") do set "PROJECT_ROOT=%%~fI"
-set "CIVITAI_BAT=%PROJECT_ROOT%\shells\download\civitai.bat"
+set "HUGGINGFACE_BAT=%PROJECT_ROOT%\shells\download\huggingface.bat"
 set "DOWNLOAD_DIR=%PROJECT_ROOT%\models\Lora"
 set "DOWNLOAD_FILE=anima-highres-aesthetic-boost.safetensors"
-set "MODEL_ID=2855073"
-set "VERSION_ID="
+set "REPO_ID=circlestone-labs/Anima-Official-LoRAs"
+set "REPO_DIR="
 set "DOWNLOAD_PATH=%DOWNLOAD_DIR%\%DOWNLOAD_FILE%"
 
 if exist "%DOWNLOAD_PATH%" (
     exit /b 0
 )
 
-if not exist "%CIVITAI_BAT%" (
-    echo civitai.bat does not exist: "%CIVITAI_BAT%"
+if not exist "%HUGGINGFACE_BAT%" (
+    echo huggingface.bat does not exist: "%HUGGINGFACE_BAT%"
     exit /b 1
 )
 
@@ -25,6 +25,5 @@ if not exist "%DOWNLOAD_DIR%" (
     )
 )
 
-call "%CIVITAI_BAT%" "%DOWNLOAD_DIR%" "%DOWNLOAD_FILE%" "%MODEL_ID%" "%VERSION_ID%"
+call "%HUGGINGFACE_BAT%" "%DOWNLOAD_DIR%" "%DOWNLOAD_FILE%" "%REPO_ID%" "%REPO_DIR%"
 exit /b %ERRORLEVEL%
-

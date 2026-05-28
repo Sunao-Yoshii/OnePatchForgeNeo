@@ -1,19 +1,19 @@
 @echo off
 
 for %%I in ("%~dp0..\..") do set "PROJECT_ROOT=%%~fI"
-set "CIVITAI_BAT=%PROJECT_ROOT%\shells\download\civitai.bat"
+set "HUGGINGFACE_BAT=%PROJECT_ROOT%\shells\download\huggingface.bat"
 set "DOWNLOAD_DIR=%PROJECT_ROOT%\models\Stable-diffusion"
-set "DOWNLOAD_FILE=oooAnima_v10.safetensors"
-set "MODEL_ID=2961949"
-set "VERSION_ID="
+set "DOWNLOAD_FILE=OOO_Anima_v10.safetensors"
+set "REPO_ID=oron1208/OOO_Anima"
+set "REPO_DIR=model/"
 set "DOWNLOAD_PATH=%DOWNLOAD_DIR%\%DOWNLOAD_FILE%"
 
 if exist "%DOWNLOAD_PATH%" (
     exit /b 0
 )
 
-if not exist "%CIVITAI_BAT%" (
-    echo civitai.bat does not exist: "%CIVITAI_BAT%"
+if not exist "%HUGGINGFACE_BAT%" (
+    echo huggingface.bat does not exist: "%HUGGINGFACE_BAT%"
     exit /b 1
 )
 
@@ -25,5 +25,5 @@ if not exist "%DOWNLOAD_DIR%" (
     )
 )
 
-call "%CIVITAI_BAT%" "%DOWNLOAD_DIR%" "%DOWNLOAD_FILE%" "%MODEL_ID%" "%VERSION_ID%"
+call "%HUGGINGFACE_BAT%" "%DOWNLOAD_DIR%" "%DOWNLOAD_FILE%" "%REPO_ID%" "%REPO_DIR%"
 exit /b %ERRORLEVEL%

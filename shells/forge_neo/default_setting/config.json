@@ -586,5 +586,6 @@
     "bilingual_localization_logger": false,
     "bilingual_localization_file": "None",
     "bilingual_localization_order": "Translation First",
-    "bilingual_localization_dirs": "{}"
+    "bilingual_localization_dirs": "{}",
+    "sd_checkpoint_hash": "f743586f23b05a078f56d3411a52d37eb709b4cc26f73c304cb3c4e780fd7a84"
 }

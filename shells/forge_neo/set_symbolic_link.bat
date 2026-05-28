@@ -14,6 +14,15 @@ for %%I in ("%~1") do set "LINK_DIR=%%~fI"
 for %%I in ("%~2") do set "TARGET_DIR=%%~fI"
 for %%I in ("%LINK_DIR%\..") do set "LINK_PARENT_DIR=%%~fI"
 
+if exist "%LINK_DIR%" (
+    if exist "%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" (
+        "%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -Command "$item = Get-Item -LiteralPath $env:LINK_DIR -Force -ErrorAction SilentlyContinue; if ($null -ne $item -and $null -ne $item.LinkType) { exit 0 }; exit 1" >nul 2>&1
+        if not errorlevel 1 (
+            exit /b 0
+        )
+    )
+)
+
 if not exist "%LINK_PARENT_DIR%" (
     mkdir "%LINK_PARENT_DIR%"
     if errorlevel 1 (

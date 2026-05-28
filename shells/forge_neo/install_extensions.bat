@@ -30,9 +30,6 @@ if errorlevel 1 exit /b 1
 call "%INSTALL_EXTENSION%" "https://github.com/altoiddealer/--sd-webui-ar-plusplus.git" "main" "--sd-webui-ar-plusplus"
 if errorlevel 1 exit /b 1
 
-call "%INSTALL_EXTENSION%" "https://github.com/zanllp/sd-webui-infinite-image-browsing.git" "main" "sd-webui-infinite-image-browsing"
-if errorlevel 1 exit /b 1
-
 call "%INSTALL_EXTENSION%" "https://github.com/bluelovers/sd-webui-pnginfo-beautify.git" "master" "sd-webui-pnginfo-beautify"
 if errorlevel 1 exit /b 1
 
