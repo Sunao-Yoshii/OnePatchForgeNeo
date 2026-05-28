@@ -5,7 +5,6 @@ set "PROJECT_ROOT=%~dp0"
 set "FORGE_DIR=%PROJECT_ROOT%sd-webui-forge-neo"
 set "FORGE_VENV=%FORGE_DIR%\venv"
 set "MAKE_VENV=%PROJECT_ROOT%shells\python\make_venv.bat"
-set "SET_GIT_PATH=%PROJECT_ROOT%shells\git\set_git_path.bat"
 
 if not exist "%FORGE_DIR%" (
     echo Forge Neo directory does not exist: "%FORGE_DIR%"
@@ -17,35 +16,12 @@ if not exist "%MAKE_VENV%" (
     exit /b 1
 )
 
-if not exist "%SET_GIT_PATH%" (
-    echo set_git_path.bat does not exist: "%SET_GIT_PATH%"
-    exit /b 1
-)
-
-call "%SET_GIT_PATH%"
-if errorlevel 1 (
-    echo Failed to set git path.
-    exit /b 1
-)
-
-git -C "%PROJECT_ROOT%" pull origin main
-if errorlevel 1 (
-    echo Failed to update OnePatchForgeNeo repository.
-    exit /b 1
-)
-
 if exist "%FORGE_VENV%" (
     rmdir /s /q "%FORGE_VENV%"
     if exist "%FORGE_VENV%" (
         echo Failed to remove Forge Neo venv: "%FORGE_VENV%"
         exit /b 1
     )
-)
-
-git -C "%FORGE_DIR%" pull origin neo
-if errorlevel 1 (
-    echo Failed to update Forge Neo repository.
-    exit /b 1
 )
 
 call "%MAKE_VENV%" "%FORGE_DIR%"
