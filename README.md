@@ -1,4 +1,4 @@
-# OnePatchForgeNeo
+# OneBatchForgeNeo
 
 ForgeNeo をワンパン操作でインストールできるパッチを目指すリポジトリ。
 
