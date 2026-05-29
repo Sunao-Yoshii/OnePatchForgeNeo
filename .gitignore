@@ -11,3 +11,4 @@ models/ControlNetPreprocessor
 .keep
 *here.txt
 easy_prompt_selector
+*.code-workspace

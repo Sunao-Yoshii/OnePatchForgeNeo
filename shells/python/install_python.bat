@@ -15,8 +15,23 @@ if not defined PYTHON_PATH (
     exit /b 1
 )
 
-if not defined PYTHON_ZIP_RENAME (
-    echo PYTHON_ZIP_RENAME is not defined.
+if not defined PYTHON_PACKAGE_FILE (
+    echo PYTHON_PACKAGE_FILE is not defined.
+    exit /b 1
+)
+
+if not defined PYTHON_ENV_PATH (
+    echo PYTHON_ENV_PATH is not defined.
+    exit /b 1
+)
+
+if not defined PYTHON_PACKAGE_TOOLS_PATH (
+    echo PYTHON_PACKAGE_TOOLS_PATH is not defined.
+    exit /b 1
+)
+
+if not defined PYTHON_GET_PIP_URL (
+    echo PYTHON_GET_PIP_URL is not defined.
     exit /b 1
 )
 
@@ -31,13 +46,22 @@ if "%CURRENT_PYTHON_PREFIX%"=="%PYTHON_VERSION%" (
 
 :INSTALL_PYTHON
 
-set "SCRIPT_DIR=%~dp0"
-set "PYTHON_DIR=%SCRIPT_DIR%%PYTHON_PATH%"
+for %%I in ("%~dp0.") do set "SCRIPT_DIR=%%~fI"
+set "PYTHON_ENV_DIR=%SCRIPT_DIR%\%PYTHON_ENV_PATH%"
+set "PYTHON_DIR=%SCRIPT_DIR%\%PYTHON_PATH%"
 set "PYTHON_SCRIPTS_DIR=%PYTHON_DIR%\Scripts"
-set "PYTHON_ZIP=%PYTHON_DIR%\%PYTHON_ZIP_RENAME%"
+set "PYTHON_PACKAGE=%PYTHON_ENV_DIR%\%PYTHON_PACKAGE_FILE%"
+set "PYTHON_TOOLS_DIR=%PYTHON_ENV_DIR%\%PYTHON_PACKAGE_TOOLS_PATH%"
 set "PYTHON_EXE=%PYTHON_DIR%\python.exe"
-set "PYTHON_PTH=%PYTHON_DIR%\%PYTHON_PATH%._pth"
 set "GET_PIP=%PYTHON_DIR%\get-pip.py"
+
+if not exist "%PYTHON_ENV_DIR%" (
+    mkdir "%PYTHON_ENV_DIR%"
+    if errorlevel 1 (
+        echo Failed to create Python env directory: "%PYTHON_ENV_DIR%"
+        exit /b 1
+    )
+)
 
 if not exist "%PYTHON_DIR%" (
     mkdir "%PYTHON_DIR%"
@@ -47,37 +71,34 @@ if not exist "%PYTHON_DIR%" (
     )
 )
 
-curl -L --fail --ssl-no-revoke --output "%PYTHON_ZIP%" "%PYTHON_INSTALL_URL%"
+curl -L --fail --ssl-no-revoke --output "%PYTHON_PACKAGE%" "%PYTHON_INSTALL_URL%"
 if errorlevel 1 (
     echo Failed to download Python: "%PYTHON_INSTALL_URL%"
     exit /b 1
 )
 
-tar -xf "%PYTHON_ZIP%" -C "%PYTHON_DIR%"
+tar -xf "%PYTHON_PACKAGE%" -C "%PYTHON_ENV_DIR%"
 if errorlevel 1 (
-    echo Failed to extract Python archive: "%PYTHON_ZIP%"
+    echo Failed to extract Python package: "%PYTHON_PACKAGE%"
     exit /b 1
 )
 
-if not exist "%PYTHON_PTH%" (
-    echo Python path file does not exist: "%PYTHON_PTH%"
+if not exist "%PYTHON_TOOLS_DIR%" (
+    echo Python tools directory does not exist: "%PYTHON_TOOLS_DIR%"
     exit /b 1
 )
 
-if not exist "%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" (
-    echo powershell.exe is required to update Python path file: "%PYTHON_PTH%"
+robocopy "%PYTHON_TOOLS_DIR%" "%PYTHON_DIR%" /E /MOVE >nul
+if errorlevel 8 (
+    echo Failed to move Python tools into: "%PYTHON_DIR%"
     exit /b 1
 )
 
-"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -Command "$path = $env:PYTHON_PTH; $text = [System.IO.File]::ReadAllText($path); $text = $text.Replace('#import site', 'import site'); [System.IO.File]::WriteAllText($path, $text, [System.Text.UTF8Encoding]::new($false))"
-if errorlevel 1 (
-    echo Failed to update Python path file: "%PYTHON_PTH%"
-    exit /b 1
-)
+del /f /q "%PYTHON_DIR%\*._pth" >nul 2>&1
 
 call set "PATH=%PYTHON_DIR%;%PYTHON_SCRIPTS_DIR%;%%PATH%%"
 
-curl -sSL --fail --ssl-no-revoke "https://bootstrap.pypa.io/get-pip.py" -o "%GET_PIP%"
+curl -sSL --fail --ssl-no-revoke "%PYTHON_GET_PIP_URL%" -o "%GET_PIP%"
 if errorlevel 1 (
     echo Failed to download get-pip.py.
     exit /b 1
