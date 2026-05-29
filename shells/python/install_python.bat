@@ -119,4 +119,10 @@ if not "%PIP_INSTALL_RESULT%"=="0" (
     exit /b 1
 )
 
+pip install uv
+if errorlevel 1 (
+    echo Failed to install uv.
+    exit /b 1
+)
+
 exit /b 0
