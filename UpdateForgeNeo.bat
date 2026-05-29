@@ -1,11 +1,11 @@
 @echo off
 if exist "%SystemRoot%\System32\chcp.com" "%SystemRoot%\System32\chcp.com" 65001 >nul
 
-set "PROJECT_ROOT=%~dp0"
-set "FORGE_DIR=%PROJECT_ROOT%sd-webui-forge-neo"
+for %%I in ("%~dp0.") do set "PROJECT_ROOT=%%~fI"
+set "FORGE_DIR=%PROJECT_ROOT%\sd-webui-forge-neo"
 set "FORGE_VENV=%FORGE_DIR%\venv"
-set "MAKE_VENV=%PROJECT_ROOT%shells\python\make_venv.bat"
-set "SET_GIT_PATH=%PROJECT_ROOT%shells\git\set_git_path.bat"
+set "MAKE_VENV=%PROJECT_ROOT%\shells\python\make_venv.bat"
+set "SET_GIT_PATH=%PROJECT_ROOT%\shells\git\set_git_path.bat"
 
 if not exist "%FORGE_DIR%" (
     echo Forge Neo directory does not exist: "%FORGE_DIR%"
@@ -28,8 +28,17 @@ if errorlevel 1 (
     exit /b 1
 )
 
-git -C "%PROJECT_ROOT%" pull origin main
+pushd "%PROJECT_ROOT%"
 if errorlevel 1 (
+    echo Failed to enter OnePatchForgeNeo repository: "%PROJECT_ROOT%"
+    exit /b 1
+)
+
+git pull origin main
+set "PROJECT_PULL_RESULT=%ERRORLEVEL%"
+popd
+
+if not "%PROJECT_PULL_RESULT%"=="0" (
     echo Failed to update OnePatchForgeNeo repository.
     exit /b 1
 )
@@ -42,8 +51,17 @@ if exist "%FORGE_VENV%" (
     )
 )
 
-git -C "%FORGE_DIR%" pull origin neo
+pushd "%FORGE_DIR%"
 if errorlevel 1 (
+    echo Failed to enter Forge Neo repository: "%FORGE_DIR%"
+    exit /b 1
+)
+
+git pull origin neo
+set "FORGE_PULL_RESULT=%ERRORLEVEL%"
+popd
+
+if not "%FORGE_PULL_RESULT%"=="0" (
     echo Failed to update Forge Neo repository.
     exit /b 1
 )
