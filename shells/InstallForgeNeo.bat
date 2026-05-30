@@ -10,6 +10,7 @@ set "PROJECT_ROOT=%SCRIPT_DIR%.."
 for %%I in ("%PROJECT_ROOT%") do set "PROJECT_ROOT=%%~fI"
 set "VERSION_CONTROL=%SCRIPT_DIR%version_control.bat"
 set "INSTALL_PYTHON=%SCRIPT_DIR%python\install_python.bat"
+set "INSTALL_VC_REDIST=%SCRIPT_DIR%vs_redest\install_vc_redist.bat"
 set "MAKE_VENV=%SCRIPT_DIR%python\make_venv.bat"
 set "SET_GIT_PATH=%SCRIPT_DIR%git\set_git_path.bat"
 set "DOWNLOAD_ARIA=%SCRIPT_DIR%download\download_aria.bat"
@@ -30,6 +31,11 @@ if not exist "%VERSION_CONTROL%" (
 
 if not exist "%INSTALL_PYTHON%" (
     echo install_python.bat does not exist: "%INSTALL_PYTHON%"
+    exit /b 1
+)
+
+if not exist "%INSTALL_VC_REDIST%" (
+    echo install_vc_redist.bat does not exist: "%INSTALL_VC_REDIST%"
     exit /b 1
 )
 
@@ -77,6 +83,12 @@ if errorlevel 1 (
 call "%INSTALL_PYTHON%"
 if errorlevel 1 (
     echo Failed to install Python.
+    exit /b 1
+)
+
+call "%INSTALL_VC_REDIST%"
+if errorlevel 1 (
+    echo Failed to install Visual C++ Redistributable.
     exit /b 1
 )
 
