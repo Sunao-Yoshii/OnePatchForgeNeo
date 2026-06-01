@@ -1,5 +1,7 @@
 ﻿name,prompt,negative_prompt
-Anima1.0Base,"masterpiece, best quality, score_7, safe, ","worst quality, low quality, score_1, score_2, score_3, artist name"
-NovaAnima,"masterpiece, best quality, score_9, score_8, score_7, year 2025, newest, highres, absurdres, very aesthetic, scenery, ","worst quality, low quality, early, old, score_1, score_2, score_3, cartoon, graphic, painting, crayon, graphite, abstract, glitch, deformed, mutated, ugly, disfigured, long body, bad anatomy, bad hands, missing fingers, extra fingers, extra digits, fewer digits, cropped, very displeasing, artist name, blurry, jpeg artifacts, lowres, censor,"
-OOO_Anima,"masterpiece,best quality, high quality,newest,year 2025, year 2024,safe,game cg,","worst quality, low quality, score_1, score_2, score_3, artifacts,early, old,nsfw,realistic, "
-Hassaku,"masterpiece, best quality, score_7,","worst quality, low quality, score_1, score_2, score_3, blurry, jpeg artifacts, sepia,"
+QtAnima:Anima1.0Base,"masterpiece, best quality, score_7, safe, ","worst quality, low quality, score_1, score_2, score_3, artist name"
+QtAnima:NovaAnima,"masterpiece, best quality, score_9, score_8, score_7, year 2025, newest, highres, absurdres, very aesthetic, scenery, ","worst quality, low quality, early, old, score_1, score_2, score_3, cartoon, graphic, painting, crayon, graphite, abstract, glitch, deformed, mutated, ugly, disfigured, long body, bad anatomy, bad hands, missing fingers, extra fingers, extra digits, fewer digits, cropped, very displeasing, artist name, blurry, jpeg artifacts, lowres, censor,"
+QtAnima:OOO_Anima,"masterpiece,best quality, high quality,newest,year 2025, year 2024,safe,game cg,","worst quality, low quality, score_1, score_2, score_3, artifacts,early, old,nsfw,realistic, "
+QtAnima:Hassaku,"masterpiece, best quality, score_7,","worst quality, low quality, score_1, score_2, score_3, blurry, jpeg artifacts, sepia,"
+sub: Propotions,"appropriate posture,appropriate configuration,ideal ratio body proportions,perfect anatomy","long-bodied,bad anatomy"
+NegHand: NegHands,,"extra arms, missing fingers, extra_fingers, bad fingers, multiple finger, poorly drawn fingers, bad hands, extra hands, malformed_hands"
