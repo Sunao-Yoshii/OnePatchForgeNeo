@@ -36,6 +36,19 @@ if errorlevel 1 exit /b 1
 call "%INSTALL_EXTENSION%" "https://github.com/eduardoabreu81/sd-webui-prompt-all-in-one-neo.git" "main" "sd-webui-prompt-all-in-one-neo"
 if errorlevel 1 exit /b 1
 
+set "PROMPT_ALL_IN_ONE_TEMPLATE_DIR=%SCRIPT_DIR%\extensions\sd-webui-prompt-all-in-one-neo"
+set "PROMPT_ALL_IN_ONE_STORAGE_DIR=%PROJECT_ROOT%\sd-webui-forge-neo\extensions\sd-webui-prompt-all-in-one-neo\storage"
+
+if not exist "%PROMPT_ALL_IN_ONE_STORAGE_DIR%" (
+    mkdir "%PROMPT_ALL_IN_ONE_STORAGE_DIR%"
+    if errorlevel 1 exit /b 1
+)
+
+if exist "%PROMPT_ALL_IN_ONE_TEMPLATE_DIR%\*.json" (
+    copy /Y "%PROMPT_ALL_IN_ONE_TEMPLATE_DIR%\*.json" "%PROMPT_ALL_IN_ONE_STORAGE_DIR%\" >nul
+    if errorlevel 1 exit /b 1
+)
+
 call "%INSTALL_EXTENSION%" "https://github.com/Chiralistic/Stable-diffusion-webui-civitai-helper-RED-UPDATE.git" "master" "Stable-diffusion-webui-civitai-helper-RED-UPDATE"
 if errorlevel 1 exit /b 1
 
