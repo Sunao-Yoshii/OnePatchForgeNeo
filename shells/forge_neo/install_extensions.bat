@@ -45,8 +45,9 @@ if errorlevel 1 exit /b 1
 call "%INSTALL_EXTENSION%" "https://github.com/Haoming02/sd-forge-negpip.git" "classic" "sd-forge-negpip"
 if errorlevel 1 exit /b 1
 
-call "%INSTALL_EXTENSION%" "https://github.com/KohakuBlueleaf/z-tipo-extension.git" "main" "z-tipo-extension"
-if errorlevel 1 exit /b 1
+REM Pythonバージョンが合わずインストールできないので一旦コメントアウト
+REM call "%INSTALL_EXTENSION%" "https://github.com/KohakuBlueleaf/z-tipo-extension.git" "main" "z-tipo-extension"
+REM if errorlevel 1 exit /b 1
 
 call "%INSTALL_EXTENSION%" "https://github.com/SiliconeShojo/ScribeNEO.git" "main" "ScribeNEO"
 if errorlevel 1 exit /b 1
