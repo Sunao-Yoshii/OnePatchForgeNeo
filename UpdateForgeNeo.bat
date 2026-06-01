@@ -6,6 +6,7 @@ set "FORGE_DIR=%PROJECT_ROOT%\sd-webui-forge-neo"
 set "FORGE_VENV=%FORGE_DIR%\venv"
 set "MAKE_VENV=%PROJECT_ROOT%\shells\python\make_venv.bat"
 set "SET_GIT_PATH=%PROJECT_ROOT%\shells\git\set_git_path.bat"
+set "INSTALL_EXTENSIONS=%PROJECT_ROOT%\shells\forge_neo\install_extensions.bat"
 
 if not exist "%FORGE_DIR%" (
     echo Forge Neo directory does not exist: "%FORGE_DIR%"
@@ -19,6 +20,11 @@ if not exist "%MAKE_VENV%" (
 
 if not exist "%SET_GIT_PATH%" (
     echo set_git_path.bat does not exist: "%SET_GIT_PATH%"
+    exit /b 1
+)
+
+if not exist "%INSTALL_EXTENSIONS%" (
+    echo install_extensions.bat does not exist: "%INSTALL_EXTENSIONS%"
     exit /b 1
 )
 
@@ -69,6 +75,12 @@ if not "%FORGE_PULL_RESULT%"=="0" (
 call "%MAKE_VENV%" "%FORGE_DIR%"
 if errorlevel 1 (
     echo Failed to recreate Forge Neo venv.
+    exit /b 1
+)
+
+call "%INSTALL_EXTENSIONS%"
+if errorlevel 1 (
+    echo Failed to install Forge Neo extensions.
     exit /b 1
 )
 
