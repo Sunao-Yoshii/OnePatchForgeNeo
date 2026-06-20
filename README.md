@@ -2,6 +2,10 @@
 
 ForgeNeo をワンパン操作でインストールできるパッチを目指すリポジトリ。
 
+※ このリポジトリは放棄されています。下記がお勧めですので、乗り換えを推奨します。
+https://github.com/hirorohi03/EasyForgeNeo/tree/main
+
+
 ## インストール方法
 
 - [こちらのファイル](https://github.com/Sunao-Yoshii/OnePatchForgeNeo/raw/main/shells/ProjectInstall.bat) を右クリックから保存します。
